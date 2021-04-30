@@ -16,14 +16,25 @@ class Team(db.Model):
         self.league_id = league_id
 
 
-class TeamSchema(ma.SQLAlchemySchema):
+class League(db.Model):
+    __tablename__ = 'leagues'
+
+    id = db.Column(db.String, primary_key=True)
+    name = db.Column(db.String())
+
+
+class TeamSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = Team
+        include_fk = True
 
-    id = ma.auto_field
-    name = ma.auto_field
-    locale = ma.auto_field
-    league_id = ma.auto_field
+
+class LeagueSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = League
+
+    id = ma.auto_field()
+    name = ma.auto_field()
 
 
 team_schema = TeamSchema()
